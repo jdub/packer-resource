@@ -1,5 +1,5 @@
 #!/bin/sh
-jq . /dev/stdin > /tmp/input
+jq . < /dev/stdin > /tmp/input
 
 SRC=$1
 

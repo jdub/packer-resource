@@ -1,2 +1,2 @@
 #!/bin/sh
-jq -M '[.version]' /dev/stdin
+jq -M '[.version]' < /dev/stdin
