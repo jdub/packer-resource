@@ -1,0 +1,13 @@
+#!/bin/sh
+jq . /dev/stdin > /tmp/input
+
+SRC=$1
+
+TEMPLATE=$SRC/$(jq -r .params.template /tmp/input)
+jq '.params|del(.template)' /tmp/input > /tmp/var.json
+
+packer build -machine-readable -var-file=/tmp/var.json $TEMPLATE | tee /tmp/output \
+  | awk -F, '/,(say|message),/ { print $5 }' > /dev/stderr
+
+AMI=$(awk -F: '/artifact,0,id/ {print $2}' /tmp/output)
+echo '{ "version": { "ami": "'$AMI'" } }'
