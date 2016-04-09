@@ -1,0 +1,18 @@
+{
+	"folders":
+	[
+		{
+			"path": ".",
+			"follow_symlinks": true,
+			"file_exclude_patterns": [ "*.sublime-*" ],
+			"folder_exclude_patterns": [ ]
+		}
+	],
+	"settings": {
+		"tab_size": 2,
+		"translate_tabs_to_spaces": true,
+		"ensure_newline_at_eof_on_save": true,
+		"default_line_ending": "unix",
+		"rulers": [80]
+	}
+}
