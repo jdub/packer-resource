@@ -1,2 +1,5 @@
-#!/bin/sh -eu
-jq -M '[.version]' < /dev/stdin
+#!/bin/sh
+set -eu -o pipefail
+exec 3>&1 1>&2
+
+jq '[.version]' < /dev/stdin >&3

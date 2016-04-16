@@ -1,13 +1,27 @@
-#!/bin/sh -eu
+#!/bin/sh
+set -eu -o pipefail
+exec 3>&1 1>&2
+
 jq . < /dev/stdin > /tmp/input
 
 SRC=$1
 
-TEMPLATE=$SRC/$(jq -r .params.template /tmp/input)
-jq '.params|del(.template)' /tmp/input > /tmp/var.json
+TEMPLATE=$(jq -r '.params.template // empty' /tmp/input)
+if [ -z "$TEMPLATE" ]; then
+  echo "template not passed in params:" >&2
+  jq '.params // {}' /tmp/input >&2
+  exit 1
+fi
 
-packer build -machine-readable -var-file=/tmp/var.json $TEMPLATE | tee /tmp/output \
-  | awk -F, '/,(say|message),/ { print $5 }' > /dev/stderr
+jq '.params|del(.template) // empty' /tmp/input > /tmp/var.json
 
-AMI=$(awk -F: '/artifact,0,id/ {print $2}' /tmp/output)
-echo '{ "version": { "ami": "'$AMI'" } }'
+# FIXME: check for var_file parameter, put before params-derived -var-file
+# so they override like -var parameters
+
+packer build -machine-readable -var-file=/tmp/var.json $SRC/$TEMPLATE \
+  | tee /tmp/output \
+  | awk -F, '/,(say|message),/ { print $5 }'
+
+AMI=$(awk -F: '/artifact,0,id/ { print $2 }' /tmp/output)
+
+echo '{ "version": { "ami": "'$AMI'" } }' >&3
