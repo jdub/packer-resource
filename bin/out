@@ -22,6 +22,9 @@ packer build -machine-readable -var-file=/tmp/var.json $SRC/$TEMPLATE \
   | tee /tmp/output \
   | awk -F, '/,(say|message),/ { print $5 }'
 
+# FIXME: include metadata such as AMI name, copied region: ami-id, etc.
+# ... um, but generalise it for other kinds of packer builders, yeah?
+
 AMI=$(awk -F: '/artifact,0,id/ { print $2 }' /tmp/output)
 
 echo '{ "version": { "ami": "'$AMI'" } }' >&3
