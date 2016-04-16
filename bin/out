@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -eu
 jq . < /dev/stdin > /tmp/input
 
 SRC=$1
