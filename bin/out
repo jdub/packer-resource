@@ -31,13 +31,15 @@ jq '.params|del(.template,.var_file) // empty' /tmp/input > /tmp/vars.json
 # so they override like -var parameters
 
 echo "<FIND FIND FIND>"
+echo "SRC = $SRC"
+echo "TEMPLATE = $TEMPLATE"
 cd $SRC
 find
 echo "</FIND FIND FIND>"
 
 cd $(dirname $SRC/$TEMPLATE)
 
-packer validate -machine-readable $ARGS -var-file=/tmp/vars.json $SRC/$TEMPLATE
+packer validate $ARGS -var-file=/tmp/vars.json $SRC/$TEMPLATE
 
 packer build -machine-readable $ARGS -var-file=/tmp/vars.json $SRC/$TEMPLATE \
   | tee /tmp/output #| awk -F, '/,(say|message),/ { print $5 }'
