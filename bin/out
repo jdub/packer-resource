@@ -11,16 +11,31 @@ if [ -z "$TEMPLATE" ]; then
   echo "template not passed in params:" >&2
   jq '.params // {}' /tmp/input >&2
   exit 1
+elif [ ! -f "$SRC/$TEMPLATE" ]; then
+  echo "template $SRC/$TEMPLATE does not exist" >&2
+  exit 1
 fi
 
-jq '.params|del(.template) // empty' /tmp/input > /tmp/var.json
+ARGS=""
+VAR_FILE=$(jq -r '.params.var_file // empty' /tmp/input)
+if [ ! -f "$SRC/$VAR_FILE" ]; then
+  echo "var_file $SRC/$VAR_FILE does not exist" >&2
+  exit 1
+else
+  ARGS="-var-file='$SRC/VAR_FILE'"
+fi
+
+jq '.params|del(.template,.var_file) // empty' /tmp/input > /tmp/vars.json
 
 # FIXME: check for var_file parameter, put before params-derived -var-file
 # so they override like -var parameters
 
-packer build -machine-readable -var-file=/tmp/var.json $SRC/$TEMPLATE \
-  | tee /tmp/output \
-  | awk -F, '/,(say|message),/ { print $5 }'
+cd $(dirname $SRC/$TEMPLATE)
+
+packer validate -machine-readable $ARGS -var-file=/tmp/vars.json $SRC/$TEMPLATE
+
+packer build -machine-readable $ARGS -var-file=/tmp/vars.json $SRC/$TEMPLATE \
+  | tee /tmp/output #| awk -F, '/,(say|message),/ { print $5 }'
 
 # FIXME: include metadata such as AMI name, copied region: ami-id, etc.
 # ... um, but generalise it for other kinds of packer builders, yeah?
