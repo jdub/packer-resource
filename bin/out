@@ -22,20 +22,10 @@ if [ ! -f "$SRC/$VAR_FILE" ]; then
   echo "var_file $SRC/$VAR_FILE does not exist" >&2
   exit 1
 else
-  ARGS="-var-file='$SRC/$VAR_FILE'"
+  ARGS="-var-file=$SRC/$VAR_FILE"
 fi
 
 jq '.params|del(.template,.var_file) // empty' /tmp/input > /tmp/vars.json
-
-# FIXME: check for var_file parameter, put before params-derived -var-file
-# so they override like -var parameters
-
-echo "<FIND FIND FIND>"
-echo "SRC = $SRC"
-echo "TEMPLATE = $TEMPLATE"
-cd $SRC
-find
-echo "</FIND FIND FIND>"
 
 cd $(dirname $SRC/$TEMPLATE)
 
