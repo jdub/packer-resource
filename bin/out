@@ -31,8 +31,10 @@ cd $(dirname $SRC/$TEMPLATE)
 
 packer validate $ARGS -var-file=/tmp/vars.json $SRC/$TEMPLATE
 
+echo
+
 packer build -machine-readable $ARGS -var-file=/tmp/vars.json $SRC/$TEMPLATE \
-  | tee /tmp/output #| awk -F, '/,(say|message),/ { print $5 }'
+  | tee /tmp/output | awk -F, '/,(say|message),/ { print $5 }'
 
 # FIXME: include metadata such as AMI name, copied region: ami-id, etc.
 # ... um, but generalise it for other kinds of packer builders, yeah?
