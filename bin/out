@@ -22,7 +22,7 @@ if [ ! -f "$SRC/$VAR_FILE" ]; then
   echo "var_file $SRC/$VAR_FILE does not exist" >&2
   exit 1
 else
-  ARGS="-var-file='$SRC/VAR_FILE'"
+  ARGS="-var-file='$SRC/$VAR_FILE'"
 fi
 
 jq '.params|del(.template,.var_file) // empty' /tmp/input > /tmp/vars.json
