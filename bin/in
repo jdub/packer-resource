@@ -2,4 +2,10 @@
 set -eu -o pipefail
 exec 3>&1 1>&2
 
-jq '{version,metadata:[]}' < /dev/stdin >&3
+jq . < /dev/stdin > /tmp/input
+
+DEST="$1"
+
+jq '.version.ami // empty' /tmp/input > "$DEST/id"
+
+jq '{version, metadata: (.metadata // [])}' /tmp/input >&3
