@@ -6,6 +6,10 @@ jq . < /dev/stdin > /tmp/input
 
 SRC=$1
 
+export AWS_ACCESS_KEY_ID=$(jq -r '.source.aws_access_key_id // empty' < /tmp/input)
+export AWS_SECRET_ACCESS_KEY=$(jq -r '.source.aws_secret_access_key // empty' < /tmp/input)
+export AWS_DEFAULT_REGION=$(jq -r '.source.region // empty' < /tmp/input)
+
 TEMPLATE=$(jq -r '.params.template // empty' /tmp/input)
 if [ -z "$TEMPLATE" ]; then
   echo "template not passed in params:" >&2
