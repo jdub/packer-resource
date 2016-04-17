@@ -30,6 +30,11 @@ jq '.params|del(.template,.var_file) // empty' /tmp/input > /tmp/vars.json
 # FIXME: check for var_file parameter, put before params-derived -var-file
 # so they override like -var parameters
 
+echo "<FIND FIND FIND>"
+cd $SRC
+find
+echo "</FIND FIND FIND>"
+
 cd $(dirname $SRC/$TEMPLATE)
 
 packer validate -machine-readable $ARGS -var-file=/tmp/vars.json $SRC/$TEMPLATE
