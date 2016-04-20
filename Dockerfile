@@ -10,4 +10,3 @@ RUN wget -O /tmp/packer.zip \
   && rm -f /tmp/packer.zip
 
 ADD bin /opt/resource
-RUN chmod a+rx,go-w /opt/resource/*
