@@ -38,7 +38,7 @@ packer validate $ARGS -var-file=/tmp/vars.json $SRC/$TEMPLATE
 echo
 
 packer build -machine-readable $ARGS -var-file=/tmp/vars.json $SRC/$TEMPLATE \
-  | tee /tmp/output | awk -F, '/,ui,/ { print $5 }' | sed 's#%!(PACKER_COMMA)#,#g;s#\\n#\n#g'
+  | tee /tmp/output | awk -F, '/,ui,/ { print $5 }' | sed -u 's#%!(PACKER_COMMA)#,#g;s#\\n#\n#g'
 
 # FIXME: include metadata such as AMI name, copied region: ami-id, etc.
 # ... um, but generalise it for other kinds of packer builders, yeah?
