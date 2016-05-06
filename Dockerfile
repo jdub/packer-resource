@@ -1,6 +1,6 @@
 FROM alpine:latest
 
-RUN apk --no-cache add jq ca-certificates openssh-client
+RUN apk --no-cache add jq ca-certificates openssh-client sed
 
 ARG PACKER_VER=0.10.0
 
