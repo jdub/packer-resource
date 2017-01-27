@@ -20,14 +20,18 @@ elif [ ! -f "$SRC/$TEMPLATE" ]; then
   exit 1
 fi
 
+
 ARGS=""
-VAR_FILE=$(jq -r '.params.var_file // empty' /tmp/input)
-if [ ! -f "$SRC/$VAR_FILE" ]; then
-  echo "var_file $SRC/$VAR_FILE does not exist" >&2
-  exit 1
-else
-  ARGS="-var-file=$SRC/$VAR_FILE"
-fi
+FILES=$(jq -r '.params.var_file // empty | if type =="array" then .[] else . end' /tmp/input)
+
+for FILE in $FILES;do
+  if [ ! -f "$SRC/$FILE" ]; then
+    echo "var_file $SRC/$FILE does not exist" >&2
+    exit 1
+  else
+    ARGS="${ARGS} -var-file=$SRC/$FILE"
+  fi
+done
 
 jq '.params|del(.template,.var_file) // empty' /tmp/input > /tmp/vars.json
 
