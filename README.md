@@ -17,7 +17,7 @@ A Concourse CI resource to build new [Amazon Machine Images (AMI) via Packer](ht
 
 #### Parameters
 - `template`: *Required.* The path to the packer template.
-- `var_file`: *Required.* The path to a [external JSON variable file](https://www.packer.io/docs/templates/user-variables.html).
+- `var_file`: *Required.* The path or list of paths to a [external JSON variable file](https://www.packer.io/docs/templates/user-variables.html).
 
 All other parameters will be passed through to packer as variables.
 
@@ -44,5 +44,7 @@ jobs:
   - put: build-ami
     params:
       template: packer_template.json
-      var_file: secrets.json
+      var_file:
+         - secrets.json
+         - foo.json
   ```
