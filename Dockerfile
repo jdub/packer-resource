@@ -1,6 +1,6 @@
 FROM alpine:latest
 
-ARG PACKER_VER=0.12.1
+ARG PACKER_VER=0.12.2
 
 RUN apk --no-cache add jq ca-certificates openssh-client sed openssl \
   && wget -O /tmp/packer.zip \
