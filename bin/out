@@ -20,16 +20,15 @@ elif [ ! -f "$SRC/$TEMPLATE" ]; then
   exit 1
 fi
 
-
 ARGS=""
 FILES=$(jq -r '.params.var_file // empty | if type =="array" then .[] else . end' /tmp/input)
 
-for FILE in $FILES;do
+for FILE in $FILES; do
   if [ ! -f "$SRC/$FILE" ]; then
     echo "var_file $SRC/$FILE does not exist" >&2
     exit 1
   else
-    ARGS="${ARGS} -var-file=$SRC/$FILE"
+    ARGS="$ARGS -var-file=$SRC/$FILE"
   fi
 done
 
