@@ -4,9 +4,9 @@ A Concourse CI resource to build new [Amazon Machine Images (AMI) via Packer](ht
 
 ## Source Configuration
 
-- `aws_access_key_id`: *Required.* Your AWS access key ID.
+- `aws_access_key_id`: *Optional.* Your AWS access key ID.
 
-- `aws_secret_access_key`: *Required.* Your AWS secret access key.
+- `aws_secret_access_key`: *Optional.* Your AWS secret access key.
 
 - `region`: *Required.* The AWS region to search for AMIs.
 

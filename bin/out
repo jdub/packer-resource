@@ -10,6 +10,16 @@ export AWS_ACCESS_KEY_ID=$(jq -r '.source.aws_access_key_id // empty' < /tmp/inp
 export AWS_SECRET_ACCESS_KEY=$(jq -r '.source.aws_secret_access_key // empty' < /tmp/input)
 export AWS_DEFAULT_REGION=$(jq -r '.source.region // empty' < /tmp/input)
 
+# remove any empty credentials vars so the AWS client will try instance profiles
+# https://www.packer.io/docs/builders/amazon.html#using-an-iam-instance-profile
+if [ -z "$AWS_ACCESS_KEY_ID" ]; then
+  unset AWS_ACCESS_KEY_ID
+fi
+
+if [ -z "$AWS_SECRET_ACCESS_KEY" ]; then
+  unset AWS_SECRET_ACCESS_KEY
+fi
+
 TEMPLATE=$(jq -r '.params.template // empty' /tmp/input)
 if [ -z "$TEMPLATE" ]; then
   echo "template not passed in params:" >&2
