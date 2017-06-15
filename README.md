@@ -10,7 +10,7 @@ A Concourse CI resource to build new [Amazon Machine Images (AMI) via Packer](ht
 
 - `region`: *Required.* The AWS region to search for AMIs.
 
-If `aws_access_key_id` and `aws_secret_access_key` are not provided [packer will use credentials provided by the workers's IAM profile, if it has one](https://www.packer.io/docs/builders/amazon.html#using-an-iam-instance-profile).
+If `aws_access_key_id` and `aws_secret_access_key` are not provided [packer will use credentials provided by the worker's IAM profile, if it has one](https://www.packer.io/docs/builders/amazon.html#using-an-iam-instance-profile).
 
 ## Behaviour
 
