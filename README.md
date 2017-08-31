@@ -2,6 +2,8 @@
 
 A Concourse CI resource to build new [Amazon Machine Images (AMI) via Packer](https://www.packer.io/docs/builders/amazon.html)
 
+*Note:* This fork includes ansible for use as a provisioner.
+
 ## Source Configuration
 
 - `aws_access_key_id`: Your AWS access key ID.
