@@ -3,7 +3,7 @@ FROM alpine:latest
 ARG PACKER_VER=1.0.4
 ENV USER ansible
 
-RUN apk --no-cache add jq ca-certificates openssh-client sed openssl ansible \
+RUN apk --no-cache add jq bash ca-certificates openssh-client sed openssl ansible \
   && wget -O /tmp/packer.zip \
     "https://releases.hashicorp.com/packer/${PACKER_VER}/packer_${PACKER_VER}_linux_amd64.zip" \
   && unzip -o /tmp/packer.zip -d /usr/local/bin \
