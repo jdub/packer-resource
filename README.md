@@ -2,6 +2,10 @@
 
 A Concourse CI resource to build new [Amazon Machine Images (AMI) via Packer](https://www.packer.io/docs/builders/amazon.html)
 
+*Note:* This fork includes ansible for use as a provisioner.
+
+Original by [jdub](https://hub.docker.com/r/jdub/packer-resource/)!
+
 ## Source Configuration
 
 - `aws_access_key_id`: Your AWS access key ID.
@@ -29,7 +33,7 @@ resource_types:
 - name: packer
   type: docker-image
   source:
-    repository: jdub/packer-resource
+    repository: gaahrdner/packer-ansible-resource
 
 resources:
 - name: build-ami
