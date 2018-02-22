@@ -8,6 +8,7 @@ SRC=$1
 
 export AWS_ACCESS_KEY_ID=$(jq -r '.source.aws_access_key_id // empty' < /tmp/input)
 export AWS_SECRET_ACCESS_KEY=$(jq -r '.source.aws_secret_access_key // empty' < /tmp/input)
+export AWS_SESSION_TOKEN=$(jq -r '.source.aws_session_token // empty' < /tmp/input)
 export AWS_DEFAULT_REGION=$(jq -r '.source.region // empty' < /tmp/input)
 
 # remove any empty credentials vars so the AWS client will try instance profiles
@@ -18,6 +19,10 @@ fi
 
 if [ -z "$AWS_SECRET_ACCESS_KEY" ]; then
   unset AWS_SECRET_ACCESS_KEY
+fi
+
+if [ -z "$AWS_SESSION_TOKEN" ]; then
+    unset AWS_SESSION_TOKEN
 fi
 
 TEMPLATE=$(jq -r '.params.template // empty' /tmp/input)
