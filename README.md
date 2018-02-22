@@ -8,9 +8,11 @@ A Concourse CI resource to build new [Amazon Machine Images (AMI) via Packer](ht
 
 - `aws_secret_access_key`: Your AWS secret access key.
 
+- `aws_session_token`: Your AWS session token (Optional).
+
 - `region`: *Required.* The AWS region to search for AMIs.
 
-If `aws_access_key_id` and `aws_secret_access_key` are not provided [packer will use credentials provided by the worker's IAM profile, if it has one](https://www.packer.io/docs/builders/amazon.html#using-an-iam-instance-profile).
+If `aws_access_key_id`, `aws_secret_access_key` and `aws_session_token` are not provided [packer will use credentials provided by the worker's IAM profile, if it has one](https://www.packer.io/docs/builders/amazon.html#using-an-iam-instance-profile).
 
 ## Behaviour
 
@@ -37,6 +39,7 @@ resources:
   source:
     aws_access_key_id: "..."
     aws_secret_access_key: "..."
+    aws_session_token: "..."
     region: ap-southeast-2
 
 jobs:
