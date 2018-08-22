@@ -2,7 +2,7 @@ FROM alpine:latest
 
 RUN apk --no-cache add jq ca-certificates openssh-client sed
 
-ARG PACKER_VER=1.2.4
+ARG PACKER_VER=1.2.5
 
 RUN wget -O /tmp/packer.zip \
     "https://releases.hashicorp.com/packer/${PACKER_VER}/packer_${PACKER_VER}_linux_amd64.zip" \
